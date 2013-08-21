@@ -1,5 +1,7 @@
 package org.sharonjl.headsup;
 
+import android.database.sqlite.SQLiteDatabase;
+
 public class MessageTable {
 
 	public static final String TABLE_MESSAGE = "message";
@@ -9,9 +11,17 @@ public class MessageTable {
 
 	private static final String TABLE_CREATE = "create table " + TABLE_MESSAGE + " ("
 			+ COLUMN_ID + " integer primary key autoincrement, "
-			+ COLUMN_TIME + " integer, " 
+			+ COLUMN_TIME + " integer, "
 			+ COLUMN_CONTENT + " text); ";
-	
-	
 
+	public static void onCreate(SQLiteDatabase database) {
+		database.execSQL(TABLE_CREATE);
+		
+		database.execSQL("insert into ( " + COLUMN_TIME + ", "  +  COLUMN_CONTENT +") values ("  + System.currentTimeMillis() + ", 'Set your home location.');");
+		database.execSQL("insert into ( " + COLUMN_TIME + ", "  +  COLUMN_CONTENT +") values ("  + System.currentTimeMillis() + ", 'Set your work location.');");
+	}
+
+	public static void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+
+	}
 }
